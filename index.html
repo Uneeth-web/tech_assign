@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<style>
+    th{ 
+        
+        color:#fff;
+            }
+            
+</style>
+<body>
+    
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <input id="search-input" class="form-control" type="text">
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th  class="bg-info" data-colname="name" data-order="desc">Name</th>
+        <th  data-colname="Batch" data-order="desc">Batch </th>
+        <th  data-colname="Stock" data-order="desc">Stock </th>
+        <th  data-colname="Rate" data-order="desc">Rate </th>
+        <th  data-colname="Exp" data-order="desc">Exp </th>
+        <th  data-colname="Company" data-order="desc">Company </th>
+    </tr>
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+
+
+<script>
+var myArray = [
+    {'name':'1-AL 5MG TABS ***', 'batch':'079K025', 'stock':'150','rate':'58.71','exp':'01/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'1-AL SYRUP ***', 'batch':'123K025', 'stock':'67','rate':'38.71','exp':'02/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'3 CEF NOVA 1.5 INJ', 'batch':'345K025', 'stock':'50','rate':'68.71','exp':'01/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'A TO Z GOLD SOFT CAP', 'batch':'579K025', 'stock':'140','rate':'189.71','exp':'01/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'A TO Z-NS SYRUP', 'batch':'879K025', 'stock':'300','rate':'123.71','exp':'08/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'A TO Z-NS TABS', 'batch':'979K025', 'stock':'140','rate':'180.71','exp':'04/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'AB-PHYLLINE CAPS**', 'batch':'279K025', 'stock':'250','rate':'418.71','exp':'06/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'ACECLO 100MG TAB', 'batch':'078K025', 'stock':'170','rate':'318.71','exp':'11/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'ACECLO PLUS TABS', 'batch':'009K025', 'stock':'159','rate':'418.71','exp':'20/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'ACECLO-MR TAB', 'batch':'k79K025', 'stock':'120','rate':'186.71','exp':'05/10/2021','company':'F.D.C. INDIA LIMITED'},
+    {'name':'ACITROM-1MG TAB** ', 'batch':'n79K025', 'stock':'155','rate':'128.71','exp':'01/10/2021','company':'F.D.C. INDIA LIMITED'},
+
+]
+
+$('#search-input').on('keyup',function(){
+var value=$(this).val()
+console.log('value:',value)
+var data=searchTable(value, myArray)
+buildTable(data)
+
+})
+
+
+buildTable(myArray)
+
+function searchTable(value,data){
+    var filteredData=[]
+
+    for(var i = 0; i < data.length; i++){
+    value=value.toLowerCase()
+    var name = data[i].name.toLowerCase()
+
+    if(name.includes(value)){
+        filteredData.push(data[i])
+    }
+}
+return filteredData
+}
+
+
+   
+ 
+    
+function buildTable(data){
+    
+    var table = document.getElementById('myTable')
+    table.innerHTML = ''
+    for (var i = 0; i < data.length; i++){
+        // var colname = `name-${i}`
+        // var colbatch = `batch-${i}`
+        // var colbirth = `birth-${i}`
+
+        var row = `<tr>
+                        <td>${data[i].name}</td>
+                        <td>${data[i].batch}</td>
+                        <td>${data[i].stock}</td>
+                        <td>${data[i].rate}</td>
+                        <td>${data[i].exp}</td>
+                        <td>${data[i].company}</td>
+                   </tr>`
+        table.innerHTML += row
+    }
+}
+
+
+
+</script>
+<script>
+    var xValues = ["1-AL 5MG TABS **", "1-AL SYRUP **", "S3 CEF NOVA 1.5 INJ", "A TO Z GOLD SOFT CAP", "A TO Z-NS SYRUP","A TO Z-NS TABS","AB-PHYLLINE CAPS**"];
+    var yValues = [150, 67, 50, 140, 300,140,250];
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#800000",
+      "#1e7145",
+      "#e8c3b9",
+      "#FFA500"
+    ];
+    
+    // new Chart("myChart", {
+    //   type: "pie",
+    //   data: {
+    //     labels: xValues,
+    //     datasets: [{
+    //       backgroundColor: barColors,
+    //       data: yValues
+    //     }]
+    //   },
+    //   options: {
+    //     title: {
+    //       display: true,
+    //       text: "Stock Production 2022"
+    //     }
+    //   }
+    // });
+    </script>
+</body>
+</html>
